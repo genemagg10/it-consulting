@@ -257,13 +257,21 @@
       </div>
     </section>
 
-    <!-- ====== Services ====== -->
+    <!-- ====== Business Services ====== -->
     <div class="section-title">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8h10M7 12h10M7 16h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <h3>Services</h3>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Business Services</h3>
     </div>
 
-    <div id="servicesGrid" class="grid" role="list" aria-label="Service list"></div>
+    <div id="businessServicesGrid" class="grid" role="list" aria-label="Business service list"></div>
+
+    <!-- ====== Personal Services ====== -->
+    <div class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Personal Services</h3>
+    </div>
+
+    <div id="personalServicesGrid" class="grid" role="list" aria-label="Personal service list"></div>
 
     <!-- ====== Contact Anchor ====== -->
     <section id="contact" style="margin-top:42px">
@@ -296,15 +304,15 @@
 
   <script>
     // ====== Content model: add or edit services here ======
-    const services = [
+    const businessServices = [
       {
         slug: 'networking',
         title: 'Networking',
         blurb: 'Design, deploy, and troubleshoot wired and wireless networks. Edge to mesh.',
         detail: `
           <h2>Networking</h2>
-          <p>I build reliable, secure small to mid-scale networks that actually make sense to maintain. Whether you’re expanding offices, connecting remote sites, or cleaning up a spaghetti-wired legacy setup, I design networks that are fast, organized, and clearly documented.</p>
-          <p>Ubiquiti Unifi & Cisco Miraki are my go-to ecosystems for scalable, cost-effective deployments. I handle everything from VLAN segmentation and QoS tuning to site-to-site VPNs and guest network isolation — all with proper monitoring and alerting so you’re never flying blind.</p>
+          <p>I build reliable, secure small to mid-scale networks that actually make sense to maintain. Whether you're expanding offices, connecting remote sites, or cleaning up a spaghetti-wired legacy setup, I design networks that are fast, organized, and clearly documented.</p>
+          <p>Ubiquiti Unifi & Cisco Miraki are my go-to ecosystems for scalable, cost-effective deployments. I handle everything from VLAN segmentation and QoS tuning to site-to-site VPNs and guest network isolation — all with proper monitoring and alerting so you're never flying blind.</p>
           <h3>Capabilities include:</h3>
           <ul>
             <li>LAN/WAN architecture, design, and upgrades</li>
@@ -396,27 +404,146 @@
       }
     ];
 
-    // ====== Render services grid ======
-    const grid = document.getElementById('servicesGrid');
-    services.forEach(svc => {
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.setAttribute('role','listitem');
-      card.setAttribute('tabindex', '0');
-      card.dataset.slug = svc.slug;
-      card.innerHTML = `
-        <div class="card-head">
-          <div class="icon" aria-hidden="true">${svc.icon || ''}</div>
-          <div>
-            <h4>${svc.title}</h4>
-            <p>${svc.blurb}</p>
+    const personalServices = [
+      {
+        slug: 'email-management',
+        title: 'Email Management',
+        blurb: 'Organize your inbox, set up filters, and regain control of your email.',
+        detail: `
+          <h2>Email Management</h2>
+          <p>Drowning in emails? I help individuals take back their inbox through smart organization, filtering, and workflow strategies that actually stick.</p>
+          <ul>
+            <li>Inbox organization and folder structure</li>
+            <li>Automated filters and labels</li>
+            <li>Email client setup and optimization</li>
+            <li>Unsubscribe and spam management</li>
+            <li>Email backup and archiving strategies</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '📬'
+      },
+      {
+        slug: 'device-maintenance',
+        title: 'Device Maintenance',
+        blurb: 'Keep your computers, tablets, and devices running smoothly.',
+        detail: `
+          <h2>Device Maintenance</h2>
+          <p>Regular maintenance keeps your devices fast and reliable. I provide tune-ups, updates, and preventive care to extend the life of your technology.</p>
+          <ul>
+            <li>Software updates and security patches</li>
+            <li>Storage cleanup and optimization</li>
+            <li>Malware scans and removal</li>
+            <li>Backup setup and verification</li>
+            <li>Performance optimization</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '💻'
+      },
+      {
+        slug: 'basic-troubleshooting',
+        title: 'Basic Troubleshooting',
+        blurb: 'Quick fixes for common tech problems. No issue too small.',
+        detail: `
+          <h2>Basic Troubleshooting</h2>
+          <p>Technology problems are frustrating. I provide patient, clear help for everyday tech issues — from printer problems to slow computers to "it just stopped working."</p>
+          <ul>
+            <li>Connectivity and Wi-Fi issues</li>
+            <li>Printer and peripheral problems</li>
+            <li>Software crashes and freezes</li>
+            <li>Password and account recovery</li>
+            <li>General "how do I...?" questions</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '🔧'
+      },
+      {
+        slug: 'technology-education',
+        title: 'Technology Education',
+        blurb: 'Learn to use your devices and apps with confidence.',
+        detail: `
+          <h2>Technology Education</h2>
+          <p>Technology should empower you, not intimidate you. I offer patient, personalized training sessions to help you master your devices and favorite apps.</p>
+          <ul>
+            <li>One-on-one training sessions</li>
+            <li>App and software tutorials</li>
+            <li>Online safety and privacy basics</li>
+            <li>Photo and file organization</li>
+            <li>Video calling and communication apps</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '📚'
+      },
+      {
+        slug: 'intro-to-ai',
+        title: 'Introduction to AI',
+        blurb: 'Understand and start using AI tools like ChatGPT in your daily life.',
+        detail: `
+          <h2>Introduction to AI</h2>
+          <p>AI is changing how we work and live. I help you understand what AI can (and can't) do, and show you practical ways to use tools like ChatGPT, Claude, and others.</p>
+          <ul>
+            <li>What AI is and how it works (plain English)</li>
+            <li>Hands-on practice with AI assistants</li>
+            <li>Practical use cases for everyday tasks</li>
+            <li>Understanding AI limitations and safety</li>
+            <li>Writing effective prompts</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '🧠'
+      },
+      {
+        slug: 'smartphone-setup',
+        title: 'Smart Phone Setup & Training',
+        blurb: 'Get more from your iPhone or Android with personalized setup and guidance.',
+        detail: `
+          <h2>Smart Phone Setup & Training</h2>
+          <p>Your smartphone can do so much more than make calls. I help you set up, customize, and learn to use your phone's features with confidence.</p>
+          <ul>
+            <li>Initial phone setup and data transfer</li>
+            <li>App installation and organization</li>
+            <li>Camera and photo management</li>
+            <li>Accessibility features and settings</li>
+            <li>Security settings and safe practices</li>
+          </ul>
+        `,
+        chip: 'Personal',
+        icon: '📱'
+      }
+    ];
+
+    // Combined for lookups
+    const services = [...businessServices, ...personalServices];
+
+    // ====== Render services grids ======
+    function renderServiceGrid(gridId, serviceList) {
+      const grid = document.getElementById(gridId);
+      serviceList.forEach(svc => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.setAttribute('role','listitem');
+        card.setAttribute('tabindex', '0');
+        card.dataset.slug = svc.slug;
+        card.innerHTML = `
+          <div class="card-head">
+            <div class="icon" aria-hidden="true">${svc.icon || ''}</div>
+            <div>
+              <h4>${svc.title}</h4>
+              <p>${svc.blurb}</p>
+            </div>
           </div>
-        </div>
-        <span class="chip">${svc.chip || ''}</span>
-      `;
-      card.addEventListener('click', () => openSheet(svc.slug));
-      grid.appendChild(card);
-    });
+          <span class="chip">${svc.chip || ''}</span>
+        `;
+        card.addEventListener('click', () => openSheet(svc.slug));
+        grid.appendChild(card);
+      });
+    }
+
+    renderServiceGrid('businessServicesGrid', businessServices);
+    renderServiceGrid('personalServicesGrid', personalServices);
 
     // ====== Slide-over behavior ======
     const sheet = document.getElementById('sheet');
