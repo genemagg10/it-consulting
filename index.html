@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maggio Consulting</title>
+  <meta name="description" content="Consulting and development for operations, networking, AI, identity, email, and web infrastructure in the Bay Area." />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    /* ====== Design Tokens ====== */
+    :root {
+      --bg: #0b0b0d;
+      --panel: #121216;
+      --muted: #a2a2ad;
+      --text: #f7f7fb;
+      --accent-1: #00f5d4;
+      --accent-2: #ff006e;
+      --accent-3: #5b9dff;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-1: 0 10px 30px rgba(0,0,0,.45);
+      --shadow-2: 0 14px 50px rgba(0,0,0,.6);
+      --maxw: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100vh; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 15% -10%, rgba(0, 245, 212, 0.08), transparent),
+                  radial-gradient(1000px 600px at 85% 10%, rgba(255, 0, 110, 0.08), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--accent-1); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 28px 20px; flex: 1; }
+
+    /* ====== Header ====== */
+    header {
+      position: sticky; top: 0; z-index: 20;
+      background: linear-gradient(to bottom, rgba(11,11,13,.95), rgba(11,11,13,.7), transparent);
+      backdrop-filter: blur(6px);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 16px 20px; max-width: var(--maxw); margin: 0 auto;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand img { height: 44px; width: auto; filter: drop-shadow(0 6px 10px rgba(0,0,0,.4)); }
+    .brand h1 { margin: 0; font-size: 22px; letter-spacing: .6px; }
+
+    .cta { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(135deg, rgba(0,245,212,.18), rgba(91,157,255,.18)); color: var(--text); box-shadow: var(--shadow-1);
+    }
+    .cta:hover { filter: brightness(1.06); text-decoration: none; }
+
+    /* ====== Hero ====== */
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: center; padding: 28px 0 10px; }
+    .hero h2 { font-size: clamp(28px, 3.6vw, 48px); line-height: 1.1; margin: 6px 0 14px; }
+    .hero p { color: var(--muted); margin: 0 0 18px; }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius-lg);
+      padding: 20px; box-shadow: var(--shadow-1);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .badge { padding: 6px 10px; border-radius: 999px; font-size: 12px; letter-spacing: .3px; border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* ====== Services ====== */
+    .section-title { display:flex; align-items:center; gap:10px; margin: 28px 0 12px; }
+    .section-title h3 { margin: 0; font-size: 20px; letter-spacing:.4px; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-md);
+      padding: 16px; cursor: pointer; box-shadow: var(--shadow-1);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      position: relative; overflow: hidden;
+    }
+    .card:hover, .card:focus-within { transform: translateY(-2px); border-color: rgba(255,255,255,.18); box-shadow: var(--shadow-2); }
+    .card:focus-within { outline: 2px solid var(--accent-1); outline-offset: 2px; }
+    .card h4 { margin: 6px 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .chip { position: absolute; top: 12px; right: 12px; font-size: 11px; padding: 4px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); color: #dcdce9; }
+
+    .icon {
+      height: 28px; width: 28px; border-radius: 8px; margin-right: 10px; display:inline-grid; place-items:center; font-size:16px;
+      background: radial-gradient(circle at 20% 20%, rgba(0,245,212,.28), transparent 60%),
+                  radial-gradient(circle at 80% 0%, rgba(255,0,110,.28), transparent 60%),
+                  #1a1a22; border:1px solid rgba(255,255,255,.08);
+    }
+    .card-head { display:flex; align-items:center; }
+
+    /* ====== Slide-over (Service Detail) ====== */
+    .overlay { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,.6); 
+      opacity: 0; 
+      pointer-events: none; 
+      transition: opacity .2s ease;
+      backdrop-filter: blur(2px);
+      cursor: pointer;
+    }
+    .overlay[data-open="true"] { 
+      opacity: 1; 
+      pointer-events: auto; 
+    }
+    /* Add a subtle hint that clicking overlay closes the panel */
+    .overlay::after {
+      content: "ESC or click to close";
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.6);
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.4);
+      pointer-events: none;
+    }
+
+    .sheet { 
+      position: fixed; 
+      top: 0; 
+      right: 0; 
+      height: 100%; 
+      width: min(720px, 92vw); 
+      background: var(--panel); 
+      color: var(--text);
+      transform: translateX(100%); 
+      transition: transform .25s ease; 
+      box-shadow: -20px 0 60px rgba(0,0,0,.55);
+      border-left: 1px solid rgba(255,255,255,.08);
+      display: grid; 
+      grid-template-rows: auto 1fr auto;
+      z-index: 25;
+    }
+    .sheet[data-open="true"] { transform: translateX(0); }
+    .sheet header { 
+      position: sticky; 
+      top: 0; 
+      padding: 18px 22px; 
+      background: linear-gradient(to bottom, rgba(18,18,22,.98), rgba(18,18,22,.9));
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 12px;
+      z-index: 30;
+    }
+    .sheet header h4 { margin: 0; font-size: 20px; }
+    
+    /* Ensure the close button has higher z-index and proper positioning */
+    .close {
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      z-index: 31;
+    }
+    .sheet .body { padding: 8px 22px 22px; overflow: auto; }
+    .sheet .body p { color: #d7d7e2; }
+    .sheet footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,.08); background: rgba(18,18,22,.9); }
+
+    .close { 
+      background: rgba(255,255,255,.06); 
+      color: var(--text); 
+      border: 1px solid rgba(255,255,255,.16); 
+      padding: 8px 16px; 
+      border-radius: 10px; 
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s ease;
+    }
+    .close:hover { 
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.24);
+    }
+    .close:focus { outline: 2px solid var(--accent-1); outline-offset: 2px; }
+    .close::before {
+      content: "×";
+      font-size: 20px;
+      line-height: 1;
+      margin-top: -2px;
+    }
+
+    /* ====== Footer ====== */
+    footer.site { margin-top: 48px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); font-size: 14px; }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 620px) {
+      .grid { grid-template-columns: 1fr; }
+      .brand h1 { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== Top Nav ====== -->
+  <header aria-label="Site header">
+    <div class="nav">
+      <div class="brand">
+        <img src="maggioconsulting-logo.png" alt="Maggio Consulting logo" />
+        <h1>Maggio Consulting</h1>
+      </div>
+      <a class="cta" href="#contact" id="ctaLink" aria-label="Schedule a discussion">Schedule a Discussion</a>
+    </div>
+  </header>
+
+  <main class="container" id="main">
+    <!-- ====== Hero ====== -->
+    <section class="hero" aria-label="Introduction">
+      <div>
+        <div class="hero-card">
+          <h2>Enterprise-Level IT, Without the Enterprise-Level Price Tag</h2>
+          <p>
+            I help businesses operate smarter through AI automation, secure networking, and reliable cloud infrastructure. From email migrations to web architecture, I design and implement systems that scale — without the overhead of a full-time CTO.
+          </p>
+          <div class="badges">
+            <span class="badge">Networking</span>
+            <span class="badge">AI & Automation</span>
+            <span class="badge">Mobile Device Management</span>
+            <span class="badge">Email Hosting & Migrations</span>
+            <span class="badge">Web Hosting & DNS</span>
+            <span class="badge">Domain Routing</span>
+            <span class="badge">Web Hosting</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <p style="margin:0 0 10px;color:var(--muted)">Recent focus</p>
+        <ul style="margin:0 0 8px 18px; padding:0">
+          <li>Meshtastic long‑range networking pilots</li>
+          <li>Jamf School + Google Workspace fleet hygiene</li>
+          <li>AI knowledge bases and chat for SOPs</li>
+          <li>Email migrations and domain routing cleanups</li>
+        </ul>
+        <small style="color:var(--muted)">Ask about fixed‑scope packages.</small>
+      </div>
+    </section>
+
+    <!-- ====== Services ====== -->
+    <div class="section-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8h10M7 12h10M7 16h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <h3>Services</h3>
+    </div>
+
+    <div id="servicesGrid" class="grid" role="list" aria-label="Service list"></div>
+
+    <!-- ====== Contact Anchor ====== -->
+    <section id="contact" style="margin-top:42px">
+      <div class="hero-card">
+        <h3 style="margin:0 0 8px">Contact</h3>
+        <p style="margin:0 0 12px;color:var(--muted)">Schedule a call to discuss your needs. I respond quickly.</p>
+        <a class="cta" href="https://calendar.app.google/QtYaUwA72XbuKN468" target="_blank" rel="noopener">Open scheduling</a>
+      </div>
+    </section>
+
+    <footer class="site">
+      <div>&copy; <span id="year"></span> Maggio.xyz — All rights reserved</div>
+    </footer>
+  </main>
+
+  <!-- ====== Slide-over + overlay ====== -->
+  <div class="overlay" id="overlay" data-open="false" aria-hidden="true"></div>
+  <aside class="sheet" id="sheet" aria-labelledby="sheetTitle" role="dialog" aria-modal="true" data-open="false">
+    <header>
+      <h4 id="sheetTitle">Service</h4>
+      <button class="close" id="closeSheet" aria-label="Close details">Close</button>
+    </header>
+    <div class="body" id="sheetBody">
+      <!-- populated by JS -->
+    </div>
+    <footer>
+      <a class="cta" href="#contact">Book this service</a>
+    </footer>
+  </aside>
+
+  <script>
+    // ====== Content model: add or edit services here ======
+    const services = [
+      {
+        slug: 'networking',
+        title: 'Networking',
+        blurb: 'Design, deploy, and troubleshoot wired and wireless networks. Edge to mesh.',
+        detail: `
+          <h2>Networking</h2>
+          <p>I build reliable, secure small to mid-scale networks that actually make sense to maintain. Whether you’re expanding offices, connecting remote sites, or cleaning up a spaghetti-wired legacy setup, I design networks that are fast, organized, and clearly documented.</p>
+          <p>Ubiquiti Unifi & Cisco Miraki are my go-to ecosystems for scalable, cost-effective deployments. I handle everything from VLAN segmentation and QoS tuning to site-to-site VPNs and guest network isolation — all with proper monitoring and alerting so you’re never flying blind.</p>
+          <h3>Capabilities include:</h3>
+          <ul>
+            <li>LAN/WAN architecture, design, and upgrades</li>
+            <li>Mesh and point-to-point wireless links</li>
+            <li>Firewall rules, segmentation, and intrusion protection</li>
+            <li>Traffic shaping, QoS, and bandwidth management</li>
+            <li>Observability, uptime monitoring, and automated alerts</li>
+            <li>Network documentation and clean hand-offs for internal teams</li>
+          </ul>
+          <p>The goal: performance, clarity, and control — not complexity.</p>
+        `,
+        chip: 'Core',
+        icon: '🛜'
+      },
+      {
+        slug: 'identity',
+        title: 'Identity Management',
+        blurb: 'Google Workspace and Microsoft 365 hygiene. SSO, groups, lifecycle.',
+        detail: `
+          <p>Centralized identity reduces risk. I streamline provisioning, deprovisioning, and role‑based access. I map groups to real org needs and remove drift.</p>
+          <ul>
+            <li>Directory cleanup and guardrails</li>
+            <li>SSO app integrations</li>
+            <li>Automations for joiners/movers/leavers</li>
+          </ul>
+        `,
+        chip: 'Security',
+        icon: '🪪'
+      },
+      {
+        slug: 'automated-support',
+        title: 'Automated Support',
+        blurb: 'Internal chat and help portals backed by your SOPs, forms, and data.',
+        detail: `
+          <p>Reduce repetitive tickets. I build retrieval‑augmented assistants that answer accurately from your own policies and docs. Private, auditable, and measurable.</p>
+          <ul>
+            <li>Knowledge base ingestion pipelines</li>
+            <li>Chat apps with guardrails and analytics</li>
+            <li>Human handoff and feedback loops</li>
+          </ul>
+        `,
+        chip: 'AI',
+        icon: '🤖'
+      },
+      {
+        slug: 'team-collab',
+        title: 'Team Collaboration',
+        blurb: 'Notion, Google Drive, and workflow design that people actually use.',
+        detail: `
+          <p>Structure beats chaos. I design spaces for docs, tasks, and approvals that match how your team works. Clean permissions. Low‑friction templates.</p>
+          <ul>
+            <li>Docs + tasks architecture</li>
+            <li>Templates for repeatable work</li>
+            <li>Change management and training</li>
+          </ul>
+        `,
+        chip: 'Ops',
+        icon: '👥'
+      },
+      {
+        slug: 'email-migration',
+        title: 'Email Hosting & Migration',
+        blurb: 'Domain routing, DNS cleanup, and safe migrations with zero data loss.',
+        detail: `
+          <p>Email should be boring and deliver. I fix SPF/DKIM/DMARC, clean forwarding webs, and migrate mailboxes with staged cutovers.</p>
+          <ul>
+            <li>SPF/DKIM/DMARC hardening</li>
+            <li>Mailbox and archive migrations</li>
+            <li>Routing audits across providers</li>
+          </ul>
+        `,
+        chip: 'Infra',
+        icon: '📧'
+      },
+      {
+        slug: 'web-hosting',
+        title: 'Web Hosting & Domain Routing',
+        blurb: 'Deploy static or app sites with CI and sensible infra. No mystery boxes.',
+        detail: `
+          <p>From domain to deploy. I set up staging, automated builds, logs, and rollbacks. Clear ownership and docs so you are not locked out later.</p>
+          <ul>
+            <li>DNS, TLS, and CDN configuration</li>
+            <li>CI/CD for static and app sites</li>
+            <li>Zero‑downtime cutovers</li>
+          </ul>
+        `,
+        chip: 'Web',
+        icon: '🌐'
+      }
+    ];
+
+    // ====== Render services grid ======
+    const grid = document.getElementById('servicesGrid');
+    services.forEach(svc => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.setAttribute('role','listitem');
+      card.setAttribute('tabindex', '0');
+      card.dataset.slug = svc.slug;
+      card.innerHTML = `
+        <div class="card-head">
+          <div class="icon" aria-hidden="true">${svc.icon || ''}</div>
+          <div>
+            <h4>${svc.title}</h4>
+            <p>${svc.blurb}</p>
+          </div>
+        </div>
+        <span class="chip">${svc.chip || ''}</span>
+      `;
+      card.addEventListener('click', () => openSheet(svc.slug));
+      grid.appendChild(card);
+    });
+
+    // ====== Slide-over behavior ======
+    const sheet = document.getElementById('sheet');
+    const overlay = document.getElementById('overlay');
+    const sheetTitle = document.getElementById('sheetTitle');
+    const sheetBody = document.getElementById('sheetBody');
+    const closeBtn = document.getElementById('closeSheet');
+    const focusablesSel = 'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])';
+    let lastFocused = null;
+
+    function openSheet(slug) {
+      const svc = services.find(s => s.slug === slug);
+      if (!svc) return;
+      lastFocused = document.activeElement;
+      sheetTitle.textContent = svc.title;
+      sheetBody.innerHTML = svc.detail;
+      sheet.dataset.open = 'true';
+      overlay.dataset.open = 'true';
+      overlay.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      // deep link
+      const url = new URL(window.location);
+      url.hash = `#service/${slug}`;
+      history.pushState({slug}, '', url);
+      // focus management
+      setTimeout(() => {
+        const first = sheet.querySelector(focusablesSel);
+        if (first) first.focus();
+      }, 10);
+    }
+
+    function closeSheet() {
+      sheet.dataset.open = 'false';
+      overlay.dataset.open = 'false';
+      overlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+      // remove hash if present
+      if (location.hash.startsWith('#service/')) {
+        history.pushState({}, '', location.pathname + location.search);
+      }
+    }
+
+    overlay.addEventListener('click', closeSheet);
+    closeBtn.addEventListener('click', closeSheet);
+
+    // ESC to close and simple focus trap
+    // Handle keyboard events
+    document.addEventListener('keydown', (e) => {
+      if (sheet.dataset.open === 'true') {
+        // Close on Escape
+        if (e.key === 'Escape') closeSheet();
+        
+        // Close on Enter/Space when overlay is focused
+        if ((e.key === 'Enter' || e.key === ' ') && document.activeElement === overlay) {
+          e.preventDefault();
+          closeSheet();
+        }
+        
+        // Focus trap
+        if (e.key === 'Tab') {
+          const nodes = sheet.querySelectorAll(focusablesSel);
+          if (!nodes.length) return;
+          const first = nodes[0];
+          const last = nodes[nodes.length - 1];
+          if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+          else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+        }
+      }
+    });
+
+    // Hash routing support for direct links
+    function maybeOpenFromHash() {
+      const m = location.hash.match(/^#service\/(.+)$/);
+      if (m) openSheet(m[1]);
+    }
+    window.addEventListener('popstate', () => {
+      if (location.hash.startsWith('#service/')) maybeOpenFromHash();
+      else closeSheet();
+    });
+    maybeOpenFromHash();
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
