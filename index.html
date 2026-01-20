@@ -217,6 +217,7 @@
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; }
       .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      #contact { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
       .grid { grid-template-columns: 1fr; }
@@ -245,15 +246,6 @@
           <p>
             I help businesses operate smarter through AI automation, secure networking, and reliable cloud infrastructure. From email migrations to web architecture, I design and implement systems that scale — without the overhead of a full-time CTO.
           </p>
-          <div class="badges">
-            <span class="badge">Networking</span>
-            <span class="badge">AI & Automation</span>
-            <span class="badge">Mobile Device Management</span>
-            <span class="badge">Email Hosting & Migrations</span>
-            <span class="badge">Web Hosting & DNS</span>
-            <span class="badge">Domain Routing</span>
-            <span class="badge">Web Hosting</span>
-          </div>
         </div>
       </div>
       <div class="hero-card">
@@ -284,12 +276,26 @@
 
     <div id="personalServicesGrid" class="grid" role="list" aria-label="Personal service list"></div>
 
-    <!-- ====== Contact Anchor ====== -->
-    <section id="contact" style="margin-top:42px">
+    <!-- ====== Contact & Events ====== -->
+    <section id="contact" style="margin-top:42px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
       <div class="hero-card">
         <h3 style="margin:0 0 8px">Contact</h3>
         <p style="margin:0 0 12px;color:var(--muted)">Schedule a call or a coffee to discuss your needs or explore your curiosities. I respond quickly.</p>
         <a class="cta" href="https://calendar.app.google/QtYaUwA72XbuKN468" target="_blank" rel="noopener">Open scheduling</a>
+      </div>
+      <div class="hero-card">
+        <h3 style="margin:0 0 8px">Upcoming Events</h3>
+        <div style="display:flex; align-items:flex-start; gap:16px; margin-top:12px;">
+          <div style="min-width:64px; width:64px; text-align:center; background:linear-gradient(135deg, rgba(0,245,212,.15), rgba(91,157,255,.15)); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:12px 8px; flex-shrink:0;">
+            <div style="font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-1); font-weight:600; line-height:1.3;">1st Wed</div>
+            <div style="font-size:11px; color:var(--muted); margin-top:2px;">Monthly</div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--accent-1)" style="margin-top:6px; opacity:.7;"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:500; font-size:16px;">AI & Technology Chat + Coffee</div>
+            <p style="margin:4px 0 0; color:var(--muted); font-size:14px;">Casual meetup to explore AI tools, share discoveries, and ask questions over coffee.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -354,19 +360,27 @@
         icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>'
       },
       {
-        slug: 'automated-support',
-        title: 'Automated Support',
-        blurb: 'Internal chat and help portals backed by your SOPs, forms, and data.',
+        slug: 'ai-services',
+        title: 'AI Services & Automation',
+        blurb: 'Leverage AI to streamline operations, automate workflows, and work smarter.',
         detail: `
-          <p>Reduce repetitive tickets. I build retrieval‑augmented assistants that answer accurately from your own policies and docs. Private, auditable, and measurable.</p>
+          <h2>AI Services & Automation</h2>
+          <p>AI is transforming how businesses operate. I help you identify high-impact opportunities and implement practical AI solutions that deliver real results — not hype.</p>
+          <h3>What I offer:</h3>
           <ul>
-            <li>Knowledge base ingestion pipelines</li>
-            <li>Chat apps with guardrails and analytics</li>
-            <li>Human handoff and feedback loops</li>
+            <li>AI strategy consulting and opportunity assessment</li>
+            <li>Custom chatbots and virtual assistants for internal support</li>
+            <li>Document processing and data extraction automation</li>
+            <li>Tier 1 & Tier 2 level automated support services.</li>
+            <li>Workflow automation with tools like Zapier, Make, and n8n</li>
+            <li>Knowledge base creation for AI-powered search and retrieval</li>
+            <li>Integration of AI tools (ChatGPT, Claude, etc.) into existing workflows</li>
+            <li>Training teams on effective AI adoption and prompt engineering</li>
           </ul>
+          <p>The goal: practical automation that saves time and reduces errors — implemented thoughtfully with proper guardrails.</p>
         `,
         chip: 'AI',
-        icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg>'
+        icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M21 11.18V9l-3-.5c-.13-.38-.28-.76-.48-1.1l1.75-2.55-1.58-1.58-2.55 1.75c-.34-.2-.72-.35-1.1-.48L13.5 2h-3l-.5 3c-.38.13-.76.28-1.1.48L6.35 3.73 4.77 5.31l1.75 2.55c-.2.34-.35.72-.48 1.1L3 9.5v3l3.04.5c.13.38.28.76.48 1.1l-1.75 2.55 1.58 1.58 2.55-1.75c.34.2.72.35 1.1.48l.5 3.04h3l.5-3.04c.38-.13.76-.28 1.1-.48l2.55 1.75 1.58-1.58-1.75-2.55c.2-.34.35-.72.48-1.1L21 12.5v-1.32zM12 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>'
       },
       {
         slug: 'team-collab',
@@ -547,7 +561,6 @@
               <p>${svc.blurb}</p>
             </div>
           </div>
-          <span class="chip">${svc.chip || ''}</span>
         `;
         card.addEventListener('click', () => openSheet(svc.slug));
         grid.appendChild(card);
